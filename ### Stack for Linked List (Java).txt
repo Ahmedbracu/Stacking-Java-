@@ -1,0 +1,143 @@
+                                                       ======JAVA=====
+
+
+### Stack for Linked List
+
+# Normal Code::::::::
+
+class Node {
+    int data;   
+    Node next;  
+
+    // Constructor to initialize a new node with data
+    public Node(int data) {
+        this.data = data;
+        this.next = null;      // Initially, the next node is null
+    }
+}
+
+// Stack class implements a stack using a linked list
+public class Stack {
+    private Node head;         // Top of the stack (head of the linked list)
+
+    // Method to check if the stack is empty
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    // Method to push (add) a new element onto the stack
+    public void push(int data) {
+        Node newNode = new Node(data);      // Create a new node with the given data
+        newNode.next = head;                // New node points to the current head (top of stack)
+        head = newNode;                     // Update head to the new node (new top of stack)
+    }
+
+    // Method to pop (remove and return) the top element of the stack
+    public int pop() {
+        if (isEmpty()) {                    // Check if the stack is empty
+            System.out.println("Stack is empty!");
+            return -1; // Return -1 to indicate error
+        }
+        int top = head.data;                // Get the data from the top node
+        head = head.next;                   // Move head to the next node (removing the top node)
+        return top; // Return the popped value
+    }
+
+    // Method to get the top element without removing it (peek)
+    public int peek() {
+        if (isEmpty()) { 		    // Check if the stack is empty
+            System.out.println("Stack is empty!");
+            return -1;
+        }
+        return head.data; 		    // Return the data from the top node
+    }
+
+    // Method to reverse the stack
+    public void reverse() {
+        Stack tempStack = new Stack(); 		// Create a temporary stack
+        while (!isEmpty()) { 			// While the original stack is not empty
+            tempStack.push(pop()); 		// Pop elements from original stack and push them onto tempStack
+        }
+        head = tempStack.head; 			// Assign the reversed list to the original stack
+    }
+
+    // Method to insert an element at the bottom of the stack
+    public void insertAtBottom(int data){
+        if(head == null){ 			// If stack is empty, simply push the new element
+            push(data);
+            return;
+        }
+        Node temp = head; 			// Start from the top node
+        while(temp.next != null){ 		// Traverse to the last node
+            temp = temp.next; 
+        }
+        temp.next = new Node(data); 		// Insert the new node at the bottom
+    }
+
+    // Method to display the stack elements
+    public void display() {
+        Node temp = head; 			// Start from the top node
+        while (temp != null) { 			// Traverse the stack
+            System.out.print(temp.data + " -> "); // Print each element
+            temp = temp.next; 			// Move to the next node
+        }
+        System.out.println("null"); 		// Indicate the end of the stack
+    }
+
+    // Main method to test the Stack implementation
+    public static void main(String[] args) {
+        Stack s = new Stack(); 			// Create a stack object
+
+        // Push elements onto the stack
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+
+        // Display the stack before reversing
+        System.out.println("Original Stack:");
+        s.display();
+
+        // Reverse the stack
+        s.reverse();
+
+        // Display the reversed stack
+        System.out.println("Reversed Stack:");
+        s.display();
+	
+	s.insertAtBottom(5);
+	System.out.println("After insertion:");  	// Insert 5 at the bottom of the stack
+        s.display(); 					// Display stack after insertion
+    }
+} 
+
+
+
+
+
+###### Another way to reverse
+
+public void reverse(){
+	Node prev = null;
+	Node current = head;
+	Node next;
+	
+	while(current != null){
+		next = current.next;
+		current.next = prev;
+		prev = current;
+		current = next;
+	}
+	head = prev;
+}
+
+
+//How it's happening
+Step	current	next	prev (Reversed List)
+1	1	2	null ← 1
+2	2	3	null ← 1 ← 2
+3	3	4	null ← 1 ← 2 ← 3
+4	4	null	null ← 1 ← 2 ← 3 ← 4
+
+
+
