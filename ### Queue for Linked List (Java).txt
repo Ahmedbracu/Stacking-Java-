@@ -1,0 +1,96 @@
+                                                       ======JAVA=====
+
+
+### Queue for Linked List
+
+# Normal Code::::::::
+
+
+public class Node {
+    int data;
+    Node next;
+
+    // Constructor to initialize a node
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Queue {
+    private Node front, rear; // Pointers to track the front and rear of the queue
+
+    // Constructor to initialize an empty queue
+    public Queue() {
+        this.front = this.rear = null;
+    }
+
+    // Method to add an element to the queue
+    public void enqueue(int data) {
+        Node newNode = new Node(data);
+        if (rear == null) { // If the queue is empty
+            front = rear = newNode;
+        } else {
+            rear.next = newNode; // Link new node at the end
+            rear = newNode; // Update rear
+        }
+        System.out.println("Enqueued: " + data);
+    }
+
+    // Method to remove an element from the front of the queue
+    public void dequeue() {
+        if (front == null) { // If the queue is empty
+            System.out.println("Queue is empty!");
+            return;
+        }
+        int removedData = front.data;
+        front = front.next; // Move front to the next node
+        if (front == null) { // If queue becomes empty after dequeuing
+            rear = null;
+        }
+        System.out.println("Dequeued: " + removedData);
+    }
+
+    // Method to get the front element of the queue
+    public int front() {
+        if (front == null) {
+            System.out.println("Queue is empty!");
+            return -1;
+        }
+        return front.data;
+    }
+
+    // Method to check if the queue is empty
+    public boolean isEmpty() {
+        return front == null;
+    }
+
+    // Method to display the elements of the queue
+    public void display() {
+        if (front == null) {
+            System.out.println("Queue is empty!");
+            return;
+        }
+        Node current = front;
+        System.out.print("Queue elements: ");
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+        queue.display();  // Output: 10 -> 20 -> 30 -> null
+        queue.dequeue();
+        queue.display();  // Output: 20 -> 30 -> null
+        System.out.println("Front element: " + queue.front());  // Output: 20
+        System.out.println("Is queue empty? " + queue.isEmpty());  // Output: false
+    }
+}
